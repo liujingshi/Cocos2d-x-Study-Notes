@@ -229,4 +229,64 @@
 
   * 详情见文件
 
-    > 说一下这个Metatable，个人理解，定义table的一些行为，比如说两个table相加，需要将两个数组合并到一起，又或者说像C++中运算符重载，再比如`__tostring`元方法，就像是Java中重写Object类中的`tostring()`方法
+    > 说一下这个Metatable，个人理解，定义table的一些行为，比如说两个table相加，需要将两个数组合并到一起，又或者说像C++中运算符重载，再比如`__tostring`元方法，就像是Java中重写Object类中的`tostring()`方法，里面有一些元方法，不需要手动调用，在一些行为下会自动调用对应的元方法。
+
+  * `__index`元方法，访问不存在的key时调用
+
+    ``` lua
+    __index = {key = value} -- 1
+    __index = function (mytable, key) -- 2
+      return "..."
+    end
+    ```
+
+  * `rawget(mytable, key)`，跳过`__index`元方法直接访问table
+
+  * `__newindex`元方法，给不存在的key赋值时调用
+
+    ``` lua
+    __newindex = {} -- 1
+    __newindex = function (mytable, key, value)
+      -- ...
+    end
+    ```
+
+  * `rawset(mytable, key, value)`，跳过`__newindex`元方法直接给table赋值
+
+  * 操作符
+
+    |模式|描述|
+    |:--|:--|
+    |__add|对应的运算符 '+'|
+    |__sub|对应的运算符 '-'|
+    |__mul|对应的运算符 '*'|
+    |__div|对应的运算符 '/'|
+    |__mod|对应的运算符 '%'|
+    |__unm|对应的运算符 '-'|
+    |__concat|对应的运算符 '..'|
+    |__eq|对应的运算符 '=='|
+    |__lt|对应的运算符 '<'|
+    |__le|对应的运算符 '<='|
+
+    ``` lua
+    __add = function (mytable, newtable)
+      -- ...
+      return mytable
+    end
+    ```
+
+  * `__call`元方法，就是定义一个方法
+
+    ``` lua
+    __call = function (mytable, newtable)
+      -- ...
+    end
+    ```
+
+  * `__tostring`元方法，和Java中重写`tostring()`方法相似
+
+    ``` lua
+    __tostring = function (mytable)
+      return "..."
+    end
+    ```

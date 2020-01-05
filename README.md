@@ -6,6 +6,8 @@
 
 ---
 
+* 2020-01-05 继续Lua学习 `./Lua-Study-Notes/`
+
 * 2020-01-04 开始Lua学习 `./Lua-Study-Notes/`
 
   * 笔记记录在 `./Lua-Study-Notes/README.md`
